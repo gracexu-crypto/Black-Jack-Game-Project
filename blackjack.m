@@ -16,3 +16,31 @@ end
 myDeck = createDeck();
 myShuffledDeck = shuffleDeck(myDeck);
 disp(myShuffledDeck);
+
+function [playerHand, dealerHand, nextCard] = dealCards(shuffledDeck)
+    % Deal two cards each to player and dealer
+    playerHand = [shuffledDeck(1) shuffledDeck(3)];
+    dealerHand = [shuffledDeck(2) shuffledDeck(4)];
+
+    % Track the next card position
+    nextCard = 5;
+end
+
+function [hand, nextCard] = hitCard(shuffledDeck, nextCard, hand)
+    % Deal one additional card
+    hand(end+1) = shuffledDeck(nextCard);
+    nextCard = nextCard + 1;
+end
+
+[playerHand, dealerHand, nextCard] = dealCards(myShuffledDeck);
+
+disp('Player Hand:')
+disp(playerHand)
+
+disp('Dealer Hand:')
+disp(dealerHand)
+
+[playerHand, nextCard] = hitCard(myShuffledDeck, nextCard, playerHand);
+
+disp('Player Hand After Hit:')
+disp(playerHand)

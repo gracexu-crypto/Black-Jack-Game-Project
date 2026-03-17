@@ -44,3 +44,28 @@ disp(dealerHand)
 
 disp('Player Hand After Hit:')
 disp(playerHand)
+
+% (Graces Part)
+
+function handValue = calculateHandValue(hand)
+    % convert face cards (11,12,13) to 10
+    values = hand;
+    values(values > 10) = 10;
+
+    % count aces
+    numAces = sum(values == 1);
+
+    % start by treating all aces as 11
+    handValue = sum (values(values ~= 1)) + numAces * 11;
+
+    % adjust aces from 11 to 1 if bust
+    while handValue > 21 && numAces > 0
+        handValue = handValue - 10;
+        numAces = numAces - 1;
+    end
+end
+
+function bust = isBust(hand)
+    % Returns true if hand value > 21;
+    bust = calculateHandValue(hand) > 21;
+end

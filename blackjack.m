@@ -16,8 +16,27 @@ disp('Your starting hand:')
 displayHand(playerHand);
 fprintf('Your hand value: %d\n\n', calculateHandValue(playerHand));
 
-
+% show dealer's first card
+disp('Dealer shows:')
+displayHand(dealerHand(1));
 fprintf('\n');
+
+% check for Blackjack at the start
+playerValue = calculateHandValue(playerHand);
+dealerValue = calculateHandValue(dealerHand);
+
+if playerValue == 21 && dealerValue == 21
+    disp('Both player and dealer has Blackjack! It is a tie.')
+    return
+elseif playerValue == 21
+    disp('Blackjack! You win!')
+    return
+elseif dealerValue == 21
+    disp('Dealer has Blackjack. Dealer wins.')
+    return
+end
+
+fprint('\n');
 
 % Player turn
 [playerHand, nextCard, playerBust, playerStand] = playerTurn(myShuffledDeck, nextCard, playerHand);
@@ -66,7 +85,12 @@ function [playerHand, dealerHand, nextCard] = dealCards(shuffledDeck)
 end
 
 function [hand, nextCard] = hitCard(shuffledDeck, nextCard, hand)
-    % Deal one additional card
+   % protect agains no cards left
+    if nextCard > length(shuffledDeck)
+        error('No more cards left in the deck.');
+    end 
+    
+     % Deal one additional card
     hand(end+1) = shuffledDeck(nextCard);
     nextCard = nextCard + 1;
 end
@@ -106,10 +130,10 @@ function [playerHand, nextCard, playerBust, playerStand] = playerTurn(shuffledDe
 
         choice = lower(input('Type "hit" to draw a card or "stand" to stop: ', 's'));
 
-        if strcmp(choice, 'hit')
+        if strcmp(choice, 'hit')  || strcmp(choice, 'h')
             [playerHand, nextCard] = hitCard(shuffledDeck, nextCard, playerHand);
             disp('You drew:')
-            disp(playerHand(end))
+            disp(playerHand(end));
 
             if isBust(playerHand)
                 disp('Your updated hand:')
@@ -171,6 +195,21 @@ function result = determineWinner(playerHand, dealerHand)
 end
 
 function displayHand(hand)
-    % Display hand as card values
-    disp(hand)
-end
+    % Display hand as card names
+    for i = 1:length(hand)
+        card = hand(i);
+
+        if card == 1
+            fprintf('Ace ');
+        elseif card == 11
+            fprintf('Jack ');
+elseif card == 12
+            fprintf('Queen ');
+        elseif card == 13
+            fprintf('King ');
+        else
+            fprintf('%d ', card);
+        end
+    end
+    fprintf('\n');
+end        

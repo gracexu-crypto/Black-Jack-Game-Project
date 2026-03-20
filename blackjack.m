@@ -213,3 +213,44 @@ elseif card == 12
     end
     fprintf('\n');
 end        
+
+% Test createDeck
+deck = createDeck();
+assert(length(deck) == 52, 'createDeck failed: deck should have 52 cards.')
+assert(sum(deck == 1) == 4, 'createDeck failed: should contain 4 Aces.')
+disp('createDeck passed.')
+
+% Test shuffleDeck
+shuffledDeck = shuffleDeck(deck);
+assert(length(shuffledDeck) == 52, 'shuffleDeck failed: shuffled deck should have 52 cards.')
+assert(isequal(sort(shuffledDeck), sort(deck)), ...
+    'shuffleDeck failed: shuffled deck should contain the same cards.')
+disp('shuffleDeck passed.')
+
+% Test dealCards
+[playerHand, dealerHand, nextCard] = dealCards(shuffledDeck);
+assert(length(playerHand) == 2, 'dealCards failed: player should have 2 cards.')
+assert(length(dealerHand) == 2, 'dealCards failed: dealer should have 2 cards.')
+assert(nextCard == 5, 'dealCards failed: nextCard should be 5.')
+disp('dealCards passed.')
+
+% Test hitCard
+oldLength = length(playerHand);
+[playerHand2, nextCard2] = hitCard(shuffledDeck, nextCard, playerHand);
+assert(length(playerHand2) == oldLength + 1, 'hitCard failed: hand size should increase by 1.')
+assert(nextCard2 == nextCard + 1, 'hitCard failed: nextCard should increase by 1.')
+assert(playerHand2(end) == shuffledDeck(nextCard), 'hitCard failed: wrong card added.')
+disp('hitCard passed.')
+
+%% Test calculateHandValue
+assert(calculateHandValue([10 13]) == 20, 'calculateHandValue failed: [10 13] should be 20.')
+assert(calculateHandValue([1 13]) == 21, 'calculateHandValue failed: [1 13] should be 21.')
+assert(calculateHandValue([1 9 5]) == 15, 'calculateHandValue failed: [1 9 5] should be 15.')
+assert(calculateHandValue([1 1 9]) == 21, 'calculateHandValue failed: [1 1 9] should be 21.')
+disp('calculateHandValue passed.')
+
+%% Test isBust
+assert(isBust([10 9 5]) == true, 'isBust failed: [10 9 5] should bust.')
+assert(isBust([10 7]) == false, 'isBust failed: [10 7] should not bust.')
+assert(isBust([1 9]) == false, 'isBust failed: [1 9] should not bust.')
+disp('isBust passed.')

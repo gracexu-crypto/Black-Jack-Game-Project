@@ -1,6 +1,9 @@
 clc;
 clear;
 
+% This file uses assert statements to verify that the core game logic works correctly.
+
+
 deck = createDeck();
 assert(length(deck) == 52, 'deck should have 52 cards.')
 assert(sum(deck == 1) == 4, 'should contain 4 Aces.')

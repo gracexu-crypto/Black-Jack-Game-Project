@@ -1,6 +1,9 @@
 clc;
 clear;
 
+% This file handles the overall game flow from dealing to the final result.
+
+
 disp('Welcome to Blackjack!')
 
 myDeck = createDeck();

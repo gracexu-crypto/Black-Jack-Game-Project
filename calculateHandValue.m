@@ -1,3 +1,4 @@
+% Calculate the total value of a hand using Blackjack rules.
 function handValue = calculateHandValue(hand)
     values = hand;
     values(values > 10) = 10;

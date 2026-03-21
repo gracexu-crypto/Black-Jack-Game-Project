@@ -1,3 +1,5 @@
+% Compare the final player and dealer hands.
+%Return the game result as a message string.
 function result = determineWinner(playerHand, dealerHand)
     playerValue = calculateHandValue(playerHand);
     dealerValue = calculateHandValue(dealerHand);

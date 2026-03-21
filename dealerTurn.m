@@ -1,4 +1,5 @@
 function [dealerHand, nextCard] = dealerTurn(shuffledDeck, nextCard, dealerHand)
+    %Handle the dealer turn using the standard Blackjack rule.
     disp('Dealer reveals hand:')
     displayHand(dealerHand);
     fprintf('Dealer hand value: %d\n\n', calculateHandValue(dealerHand));

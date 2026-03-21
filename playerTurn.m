@@ -1,4 +1,8 @@
+% Handle the player turn by asking for hit or stand.
+% The turn ends when the player busts or chooses to stand.
+
 function [playerHand, nextCard, playerBust, playerStand] = playerTurn(shuffledDeck, nextCard, playerHand)
+    
     playerBust = false;
     playerStand = false;
 
